@@ -8,6 +8,8 @@
  
  Also has validation and toString functions for debugging
  */
+
+// heheh I give it a funny name
 public class BSPTree
 {
   /*
@@ -58,7 +60,49 @@ public class BSPTree
      */
     private void insert(Segment newSeg)
     {
-      //TODO:  implement!
+      BSPNode currentNode = root;
+      insertRecursive(newSeg, currentNode);
+
+    }
+    
+    private void insertRecursive(Segment newSeg, BSPNode currentNode)
+    {
+        //check if we split
+        Segment tempSeg;
+        
+        // If we are splitting. Split into two lines and run them recursively on each side
+        if (!newSeg.q.equals(newSeg.intersect(currentNode.s)) && (tempSeg = newSeg.split(currentNode.s)) != null)
+        {    
+            insertRecursive(newSeg, currentNode);
+            insertRecursive(tempSeg, currentNode);
+            return;
+        }
+        
+        else if(currentNode.s.isToLeft(newSeg))
+        {
+           if(currentNode.left == null)
+           {
+             currentNode.left = new BSPNode(newSeg);
+        
+             return;
+           }
+           else{
+             insertRecursive(newSeg, currentNode.left);
+           }
+        }
+        else if(currentNode.s.isRight(newSeg))
+        {
+           if(currentNode.right == null)
+           {
+               currentNode.right = new BSPNode(newSeg);
+               return;
+           }
+           else
+           {
+               insertRecursive(newSeg, currentNode.right);
+           }
+        }
+
     }
     
     /*
