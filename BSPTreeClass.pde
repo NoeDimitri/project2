@@ -71,10 +71,10 @@ public class BSPTree
         Segment tempSeg;
         
         // If we are splitting. Split into two lines and run them recursively on each side
-        if (!newSeg.q.equals(newSeg.intersect(currentNode.s)) && (tempSeg = newSeg.split(currentNode.s)) != null)
+        if (currentNode.s.intersect(newSeg) != null && newSeg.q.dist(currentNode.s.intersect(newSeg)) > EPSILON && (tempSeg = newSeg.split(currentNode.s)) != null)
         {    
-            //insertRecursive(newSeg, currentNode);
-            //insertRecursive(tempSeg, currentNode);
+            insertRecursive(newSeg, currentNode);
+            insertRecursive(tempSeg, currentNode);
             return;
         }
         
